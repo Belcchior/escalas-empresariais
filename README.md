@@ -6,51 +6,49 @@
 ![Last commit](https://img.shields.io/github/last-commit/Belcchior/escalas-empresariais)
 ![Repo size](https://img.shields.io/github/repo-size/Belcchior/escalas-empresariais)
 
-Aplicacao Python para gerar escalas empresariais, exportar mapas mensais em Excel e produzir relatorios operacionais em Word.
+Sistema em Python para geração de escalas empresariais, pensado para simular um fluxo de Recursos Humanos e operações: cadastro de funcionários, funções, turnos, folgas, regras de descanso, necessidades por setor e exportação de resultados.
 
-O projeto simula um fluxo de recursos humanos para organizar funcionarios por funcoes, turnos, folgas, regras de descanso e necessidades operacionais.
+O objetivo do projeto é automatizar parte do processo de montagem de horários de trabalho, reduzindo conflitos manuais e gerando entregáveis úteis para gestão: planilhas Excel e relatórios operacionais em Word.
+
+## Visão Geral
+
+O sistema permite configurar uma empresa fictícia com:
+
+- Funções ou cargos necessários por turno.
+- Funcionários com múltiplas funções.
+- Folgas fixas.
+- Pedidos de folga.
+- Restrições de disponibilidade.
+- Limites de horas por dia e por semana.
+- Descanso mínimo entre turnos.
+- Necessidade de equipe por dia e horário.
+
+Com base nessas informações, o motor tenta distribuir os colaboradores disponíveis e marca vagas em aberto quando não há equipe suficiente.
 
 ## Funcionalidades
 
-- Cadastro local de funcoes, colaboradores, disponibilidade e regras.
-- Geracao de escala semanal e mensal.
-- Validacoes basicas de horas maximas e descanso minimo.
-- Exportacao de escala mensal em Excel.
-- Geracao de relatorio operacional em Word.
-- Persistencia local em JSON para reutilizar a configuracao.
+- Cadastro local de funções, funcionários, disponibilidade e regras.
+- Geração de escala semanal.
+- Geração de escala mensal.
+- Distribuição de colaboradores conforme funções compatíveis.
+- Respeito a folgas fixas, pedidos de folga e restrições.
+- Controle básico de limite diário e semanal de horas.
+- Validação de descanso mínimo entre turnos.
+- Identificação de vagas em aberto.
+- Exportação da escala mensal para Excel.
+- Geração de relatório operacional em Word.
+- Persistência local em JSON para reutilizar configurações.
 
-## Requisitos
+## Estrutura do Projeto
 
-- Python 3.10+
-- Dependencias em `requirements.txt`
-
-## Instalacao
-
-```bash
-python -m venv .venv
-pip install -r requirements.txt
-```
-
-## Execucao
-
-```bash
-python escala_app.py
-```
-
-## Validacao
-
-```bash
-python -m py_compile engine.py escala_app.py estado.py export_excel.py export_relatorio.py
-python -m unittest discover -s tests
-```
-
-## Ficheiros locais
-
-O projeto gera ficheiros locais como `estado_escala.json`, `Escala_Mensal.xlsx` e relatorios `.docx`. Esses ficheiros ficam fora do Git por conterem dados operacionais ou saidas geradas.
-
-## Roadmap
-
-- Criar dados ficticios de exemplo para demonstracao.
-- Melhorar validacoes de conflitos de disponibilidade.
-- Separar a interface de terminal da logica de negocio.
-- Evoluir para uma interface grafica ou web.
+```text
+.
+├── escala_app.py          # Fluxo principal da aplicação via terminal
+├── engine.py              # Motor de geração das escalas
+├── estado.py              # Persistência local em JSON
+├── export_excel.py        # Exportação da escala para Excel
+├── export_relatorio.py    # Análise operacional e relatório Word
+├── tests/                 # Testes automatizados
+├── examples/              # Dados fictícios de exemplo
+├── requirements.txt       # Dependências Python
+└── README.md
