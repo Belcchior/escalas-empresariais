@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Local application state and generated exports
+estado_escala.json
+Escala_Mensal.xlsx
+relatorio_operacional.docx
+Relatorio_Escala_*.docx
+~$*.docx
+~$*.xlsx
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
