@@ -41,6 +41,7 @@ python escala_app.py
 
 ```bash
 python -m py_compile engine.py escala_app.py estado.py export_excel.py export_relatorio.py
+python -m unittest discover -s tests
 ```
 
 ## Ficheiros locais
@@ -49,7 +50,6 @@ O projeto gera ficheiros locais como `estado_escala.json`, `Escala_Mensal.xlsx` 
 
 ## Roadmap
 
-- Adicionar testes automatizados para o motor de escala.
 - Criar dados ficticios de exemplo para demonstracao.
 - Melhorar validacoes de conflitos de disponibilidade.
 - Separar a interface de terminal da logica de negocio.
