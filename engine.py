@@ -37,6 +37,25 @@ def horas_entre(ini: str, fim: str) -> float:
     diff_min = minutos_fim - minutos_ini  # calcula a diferença de minutos entre fim e início
     return diff_min / 60.0            # devolve a diferença convertida para horas (float)
 
+def formatar_turno(ini: str, fim: str) -> str:
+    """Monta a chave padrao do turno no formato HH:MM–HH:MM."""
+    return f"{ini}–{fim}"
+
+def separar_turno(turno: str):
+    """Aceita turnos com travessao ou hifen e devolve inicio/fim."""
+    if "–" in turno:
+        return turno.split("–", 1)
+    return turno.split("-", 1)
+
+def buscar_necessidades_turno(necessidades_dia, turno: str):
+    """Busca necessidades aceitando HH:MM–HH:MM e HH:MM-HH:MM."""
+    if turno in necessidades_dia:
+        return necessidades_dia[turno]
+    turno_com_hifen = turno.replace("–", "-")
+    if turno_com_hifen in necessidades_dia:
+        return necessidades_dia[turno_com_hifen]
+    return {}
+
 def funcionario_disponivel(emp, dia_semana, turno):  # define função que verifica se o colaborador pode trabalhar num dia/turno
     """
     Verifica se o funcionário pode trabalhar no dia+turno:
@@ -55,7 +74,7 @@ def funcionario_disponivel(emp, dia_semana, turno):  # define função que verif
     restr = emp.get("restricoes", {})        # obtém o dicionário de restrições de horário por dia da semana
     restr_dia = restr.get(dia_semana, [])    # obtém lista de intervalos de restrição para o dia em questão
     if restr_dia:                             # se existirem restrições naquele dia
-        ini_turno, fim_turno = turno.split("–")  # separa o turno "HH:MM–HH:MM" em início e fim
+        ini_turno, fim_turno = separar_turno(turno)  # separa o turno "HH:MM–HH:MM" em início e fim
         h1, m1 = map(int, ini_turno.split(":"))  # separa hora e minuto do início e converte para inteiros
         h2, m2 = map(int, fim_turno.split(":"))  # separa hora e minuto do fim e converte para inteiros
         t1 = h1 * 60 + m1                        # converte início para minutos totais
@@ -125,12 +144,12 @@ def gerar_escala_semana(estado, segunda):  # função principal do motor que mon
         dia_nome = DIAS_LONGOS[dt.weekday()]         # calcula o nome do dia (Segunda, Terça, ...) a partir do índice
         janelas = horario.get(dia_nome, [])          # obtém a lista de turnos configurados para esse dia
         for ini, fim in janelas:                     # percorre cada turno configurado (início, fim)
-            turno = f"{ini}–{fim}"                   # monta a string do turno no formato "HH:MM–HH:MM"
+            turno = formatar_turno(ini, fim)         # monta a string do turno no formato "HH:MM–HH:MM"
             escala[dt][turno] = []                   # inicializa lista de alocações para este dia/turno
 
             dur_turno = horas_entre(ini, fim)        # calcula quantas horas este turno representa
 
-            need = necessidades.get(dia_nome, {}).get(turno, {})  # obtém necessidades de funções para este dia/turno
+            need = buscar_necessidades_turno(necessidades.get(dia_nome, {}), turno)  # obtém necessidades do turno
             for role, qt in need.items():            # percorre cada função e a quantidade necessária
                 if qt <= 0:                          # se a quantidade for zero ou negativa
                     continue                         # não há nada a alocar para esta função
