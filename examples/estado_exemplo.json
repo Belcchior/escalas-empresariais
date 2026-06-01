@@ -1,0 +1,119 @@
+{
+  "roles": [
+    "caixa",
+    "repositor",
+    "supervisor"
+  ],
+  "employees": {
+    "ana": {
+      "nome": "Ana Silva",
+      "roles": [
+        "caixa",
+        "supervisor"
+      ],
+      "folga_fixa": "Domingo",
+      "pedidos_folga": [],
+      "restricoes": {},
+      "max_horas_semana_emp": 40
+    },
+    "bruno": {
+      "nome": "Bruno Costa",
+      "roles": [
+        "caixa",
+        "repositor"
+      ],
+      "folga_fixa": "Terça",
+      "pedidos_folga": [],
+      "restricoes": {
+        "Sexta": [
+          "18:00-22:00"
+        ]
+      },
+      "max_horas_semana_emp": 32
+    },
+    "carla": {
+      "nome": "Carla Mendes",
+      "roles": [
+        "repositor"
+      ],
+      "folga_fixa": "Segunda",
+      "pedidos_folga": [
+        {
+          "tipo": "HARD",
+          "data": "Quarta"
+        }
+      ],
+      "restricoes": {},
+      "max_horas_semana_emp": 24
+    }
+  },
+  "horario": {
+    "Segunda": [
+      [
+        "09:00",
+        "17:00"
+      ]
+    ],
+    "Terça": [
+      [
+        "09:00",
+        "17:00"
+      ]
+    ],
+    "Quarta": [
+      [
+        "09:00",
+        "17:00"
+      ]
+    ],
+    "Quinta": [
+      [
+        "09:00",
+        "17:00"
+      ]
+    ],
+    "Sexta": [
+      [
+        "09:00",
+        "17:00"
+      ]
+    ]
+  },
+  "necessidades": {
+    "Segunda": {
+      "09:00–17:00": {
+        "caixa": 1,
+        "repositor": 1
+      }
+    },
+    "Terça": {
+      "09:00–17:00": {
+        "caixa": 1,
+        "supervisor": 1
+      }
+    },
+    "Quarta": {
+      "09:00–17:00": {
+        "caixa": 1,
+        "repositor": 1
+      }
+    },
+    "Quinta": {
+      "09:00–17:00": {
+        "caixa": 1,
+        "repositor": 1
+      }
+    },
+    "Sexta": {
+      "09:00–17:00": {
+        "caixa": 1,
+        "supervisor": 1
+      }
+    }
+  },
+  "rules": {
+    "max_horas_dia": 10,
+    "max_horas_semana": 40,
+    "min_descanso_horas": 11
+  }
+}
